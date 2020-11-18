@@ -20,8 +20,6 @@ class DatasetRestController @Autowired constructor(
 
     @GetMapping("/getMetadata/{datasetId}")
     fun metadata(@PathVariable datasetId: String): ResponseEntity<Map<String, String>?> {
-        val metadata = repository.getMetadata()
-
         return ResponseEntity.ok(
                 repository.getMetadata().getOrDefault(datasetId, emptyMap())
         )
