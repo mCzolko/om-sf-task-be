@@ -1,18 +1,16 @@
-package com.sf.test.websocket
+package com.sf.test.api
 
-import com.sf.test.message.DataUpdate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Controller
-import kotlin.random.Random
 
 
 @EnableScheduling
 @Controller
-class DatasetController @Autowired constructor(
+class DatasetWebSocketController @Autowired constructor(
         private var template: SimpMessagingTemplate
 ) {
 
