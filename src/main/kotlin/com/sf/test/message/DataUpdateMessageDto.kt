@@ -2,11 +2,12 @@ package com.sf.test.message
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.sf.test.model.Dataset
+import com.sf.test.model.DatasetTopic
 
 
-class DataUpdateMessage(
+class DataUpdateMessageDto(
         @JsonProperty("topic")
-        val topic: String
+        val topic: DatasetTopic
 ) {
 
     @JsonProperty("payload")
@@ -14,9 +15,5 @@ class DataUpdateMessage(
 
     @JsonProperty("action")
     val action = "DATA_UPDATE"
-
-    fun addDataset(dataset: Dataset) {
-        payload.add(dataset)
-    }
 
 }

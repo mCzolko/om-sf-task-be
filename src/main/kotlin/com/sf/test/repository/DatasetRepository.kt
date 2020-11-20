@@ -15,9 +15,9 @@ class DatasetRepository {
                         "sell" to "Sell price"
                 ),
                 "stocks" to mapOf(
-                    "id" to "ID",
-                    "name" to "Stock name",
-                    "currentPrice" to "Current price for stock"
+                        "id" to "ID",
+                        "name" to "Stock name",
+                        "currentPrice" to "Current price for stock"
                 )
         )
     }

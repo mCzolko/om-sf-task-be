@@ -1,8 +1,7 @@
 package com.sf.test.api
 
-import com.sf.test.message.DataUpdateMessage
-import com.sf.test.model.DatasetOne
-import com.sf.test.model.DatasetTwo
+import com.sf.test.message.DataUpdateMessageDto
+import com.sf.test.model.DatasetTopic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.messaging.simp.SimpMessagingTemplate
@@ -21,32 +20,18 @@ class DatasetWebSocketController @Autowired constructor(
     @Scheduled(fixedRate = 1000)
     @SendTo("/topic/datasets")
     fun datasets() {
-        this.template.convertAndSend("/topic/datasets", createMessageDatasetOne())
-        this.template.convertAndSend("/topic/datasets", createMessageDatasetTwo())
+        template.convertAndSend("/topic/datasets", createMessageDatasetByType(DatasetTopic.CONTRACTS))
+        template.convertAndSend("/topic/datasets", createMessageDatasetByType(DatasetTopic.STOCKS))
     }
 
-    fun createMessageDatasetOne(): DataUpdateMessage {
-        val iterator = (1..Random.nextInt(5, 10)).iterator()
+    fun createMessageDatasetByType(topic: DatasetTopic): DataUpdateMessageDto {
+        val dataUpdateMessage = DataUpdateMessageDto(topic.createDataset().getTopic())
+        (1..Random.nextInt(5, 10)).iterator()
+                .forEach {
+                    dataUpdateMessage.payload.add(topic.createDataset())
+                }
 
-        val datasetOne = DatasetOne(Random.nextInt(1, 10))
-        val dataUpdateOneMessage = DataUpdateMessage(datasetOne.getDatasetId())
-        iterator.forEach {
-            dataUpdateOneMessage.addDataset(DatasetOne(it))
-        }
-
-        return dataUpdateOneMessage
-    }
-
-    fun createMessageDatasetTwo(): DataUpdateMessage {
-        val iterator = (1..Random.nextInt(5, 10)).iterator()
-
-        val datasetTwo = DatasetTwo(Random.nextInt(1, 10))
-        val dataUpdateTwoMessage = DataUpdateMessage(datasetTwo.getDatasetId())
-        iterator.forEach {
-            dataUpdateTwoMessage.addDataset(DatasetTwo(it))
-        }
-
-        return dataUpdateTwoMessage
+        return dataUpdateMessage
     }
 
 }
