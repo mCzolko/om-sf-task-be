@@ -13,13 +13,13 @@ class DatasetRestController @Autowired constructor(
         private val repository: DatasetRepository
 ) {
 
-    @GetMapping("/getDatasets")
-    fun datasets(): ResponseEntity<Set<String>> {
+    @GetMapping("/dataset")
+    fun getDatasets(): ResponseEntity<Set<String>> {
         return ResponseEntity.ok(repository.getDatasets())
     }
 
-    @GetMapping("/getMetadata/{datasetId}")
-    fun metadata(@PathVariable datasetId: String): ResponseEntity<Map<String, String>?> {
+    @GetMapping("/dataset/{datasetId}/metadata")
+    fun getMetadata(@PathVariable datasetId: String): ResponseEntity<Map<String, String>?> {
         return ResponseEntity.ok(
                 repository.getMetadata().getOrDefault(datasetId, emptyMap())
         )
